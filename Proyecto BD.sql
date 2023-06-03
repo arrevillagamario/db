@@ -96,3 +96,68 @@ GO
 ALTER TABLE orden_de_compra ADD CONSTRAINT fk_orden_empleado FOREIGN KEY (empleado_id) REFERENCES empleados(empleado_id)
 GO
 ALTER TABLE orden_de_compra ADD CONSTRAINT fk_orden_cliente FOREIGN KEY (cliente_id) REFERENCES cliente(cliente_id)
+
+CREATE OR ALTER PROCEDURE dbo.sp_insertarCliente
+
+	@cliente_id int,
+	@empresa varchar(30),
+	@direccion varchar(50),
+	@ciudad varchar(15),
+	@codigo_postal int,
+	@pais varchar(15),
+	@telefono int,
+	@email varchar(30)
+
+	AS
+
+	BEGIN
+
+	INSERT INTO dbo.cliente(cliente_id,empresa,direccion,ciudad,codigo_postal,pais,telefono,email)
+	SELECT @cliente_id,@empresa,@direccion,@ciudad,@codigo_postal,@pais,@telefono,@email
+
+	END
+
+--EXEC [dbo].[sp_insertarCliente] 1,'Super Selectos','Avenida independencia','Santa Ana',503,'El Salvador',61258965,'superselectos@gmail.com'
+
+CREATE OR ALTER PROCEDURE dbo.sp_insertarProducto
+
+	@producto_id int,
+	@nombre_producto varchar(30),
+	@unidades int,
+	@precio_unidad decimal,
+	@unidades_en_stock int,
+	@encargos_unidades int,
+	@proveedor_id int
+
+	AS
+
+	BEGIN
+
+	INSERT INTO [dbo].[productos](producto_id,nombre_producto,unidades,precio_unidad,unidades_en_stock,encargos_unidades,proveedor_id)
+	SELECT @producto_id,@nombre_producto,@unidades,@precio_unidad,@unidades_en_stock,@encargos_unidades,@proveedor_id
+
+	END
+--EXEC [dbo].[sp_insertarProducto] 1,'Coca Cola',25,0.50,1000,2,1
+
+CREATE OR ALTER PROCEDURE dbo.sp_insertarProveedor
+
+	@proveedor_id int,
+	@nombre_compania varchar(30),
+	@direccion varchar(50),
+	@ciudad varchar(15),
+	@codigo_postal int,
+	@pais varchar(15),
+	@telefono int,
+	@email varchar(30),
+	@website varchar(30)
+
+	AS
+
+	BEGIN
+
+	INSERT INTO [dbo].[proveedores](proveedor_id,nombre_compania,direccion,ciudad,codigo_postal,pais,telefono,email,website)
+	SELECT @proveedor_id,@nombre_compania,@direccion,@ciudad,@codigo_postal,@pais,@telefono,@email,@website
+
+	END
+
+--EXEC [dbo].[sp_insertarProveedor] 1,'Coca Cola','Carretera a metapan','Santa Ana',503,'El Salvador','24402896','cocacola@gmail.com','cocacola.sv'
